@@ -236,5 +236,114 @@ RUN wget https://github.com/COMBINE-lab/salmon/releases/download/v1.9.0/salmon-1
     mv salmon-1.9.0_linux_x86_64/bin/salmon /bin/salmon && \
     rm -r salmon-1.9.0_linux_x86_64 
 ```
+**Создаем docker образ**. Запускаем container и проверяем, что он удалится после команды **exit**.
+```
+ sudo docker build -t ubuntu:latest
+ sudo docker run --rm -it ubuntu:latest
+
+```
+**Изменение Dockerfile**
+
+Я использовала Linter и удалила весь отчет в данном порядке:
+1.   MAINTAINER --> LABEL maintainer
+2.   Удалить the apt-get lists после установки чего-либо
+3.   apt --> apt-get install package="package_vesrion"
+4.   latest --> 20.04
+5.   Уменьшить количество шагов
+
+Также я добавила несколько LABEL для имени и описания.
+
+####Linter Labeled Optimazed Dockerfile
+```
+FROM ubuntu:20.04
+LABEL maintainer="karina"
+
+LABEL org.label-schema.name="ht1"
+LABEL org.label-schema.description="Hometask 1 Karina Burmak"
+
+#apt-transport-https, python-pip, and unzip
+RUN apt-get update && \
+  apt-get install -y install apt-utils=2.4.8 && \
+  apt-get install -y apt-transport-https=2.0.2ubuntu0.2 && \
+  apt-get -y install openjdk-11-jre-headless=11.0.17+8-1ubuntu2~20.04 && \
+  apt-get -y install python3-pip=20.0.2-5ubuntu1.5 && \
+  apt-get -y install unzip=6.0-25ubuntu1.1 && \ 
+  apt-get clean && \ 
+  rm -rf /var/lib/apt/lists/*
+
+#create /.bashrc for aliases
+RUN touch /.bashrc
+
+#run samtools v1.16.1
+RUN wget https://github.com/samtools/samtools/archive/refs/tags/1.16.1.zip -O ./samtools-1.16.1.zip && \
+    unzip samtools-1.16.1.zip && \
+    rm samtools-1.16.1.zip && \
+    mv samtools-1.16.1/misc samtools && \
+    rm -r samtools-1.16.1 && \
+    echo 'alias samtools="/samtools/samtools.pl"' >> /.bashrc
+
+#run bedtools v.2.30.0
+RUN wget https://github.com/arq5x/bedtools2/releases/download/v2.30.0/bedtools.static.binary -O /bin/bedtools.static.binary && \
+    chmod a+x /bin/bedtools.static.binary && \
+    echo 'alias bedtools="/bin/bedtools.static.binary"' >> /.bashrc
+
+#run multic v1.13
+RUN pip install multiqc==1.13
+
+#run fastqc v0.11.9
+RUN wget https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.9.zip && \
+    unzip fastqc_v0.11.9.zip && \
+    rm fastqc_v0.11.9.zip && \
+    chmod a+x FastQC/fastqc && \
+    echo 'alias fastqc="/FastQC/fastqc"' >> /.bashrc
+
+#run STAR v.2.7.10b
+RUN wget https://github.com/alexdobin/STAR/releases/download/2.7.10b/STAR_2.7.10b.zip && \
+    unzip STAR_2.7.10b.zip && \
+    rm STAR_2.7.10b.zip && \
+    chmod a+x STAR_2.7.10b/Linux_x86_64_static/STAR && \
+    mv STAR_2.7.10b/Linux_x86_64_static/STAR /bin/STAR && \
+    rm -r STAR_2.7.10b
+
+#run salmon v.1.9.0
+RUN wget https://github.com/COMBINE-lab/salmon/releases/download/v1.9.0/salmon-1.9.0_linux_x86_64.tar.gz && \
+    tar -zxvf salmon-1.9.0_linux_x86_64.tar.gz && \
+    rm salmon-1.9.0_linux_x86_64.tar.gz && \
+    chmod a+x salmon-1.9.0_linux_x86_64/bin/salmon && \
+    mv salmon-1.9.0_linux_x86_64/bin/salmon /bin/salmon && \
+    rm -r salmon-1.9.0_linux_x86_64 
+
+```
+## Extra points [1.5]
+
+You will be awarded extra points for the following:
+* [0.5] Using [multi-stage builds](https://docs.docker.com/build/building/multi-stage/) in Docker. E.g. to build reat and copy only the executable to the final image.
+
+* [0.75] Minimizing the size of the final Docker image. That is, removing all intermediates, unnecessary binaries/caches, etc. Don't forget to compare & report the final size before and after all the optimizations.
+
+* [0.25] Create an extra Dockerfile that starts from [a conda base image](https://hub.docker.com/r/continuumio/anaconda3) and builds everything from your conda environment file. 
+
+Hint: `conda env create --quiet -f environment.yml && conda clean -a` ([example](https://github.com/nf-core/clipseq/blob/master/Dockerfile))
+
+Docker образ:
+*   via raw Dockerfile - **2.01 Gb**
+*   via optimized Dockerfile - **1.32 Gb**
 
 
+###Dockerfile for conda
+
+
+```
+FROM continuumio/anaconda3
+LABEL maintainer="karina"
+#labels   
+LABEL org.label-schema.name="ht1"
+LABEL org.label-schema.description="Hometask 1 Karina Burmak"
+
+#create the env    
+COPY environment.yml . 
+RUN apt-get update && apt-get -y install apt-utils=2.4.8 && \
+  apt-get -y installed apt-transport-https=2.0.2ubuntu0.2 && \
+  conda env create --file environment.yml && conda clean -a  
+```
+Docker — это действительно удобно и полезно.
