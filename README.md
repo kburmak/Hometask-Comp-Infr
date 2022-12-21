@@ -115,7 +115,7 @@ Here is the list of tools and their versions that are used in your work:
 * [1] Use [hadolint](https://hadolint.github.io/hadolint/) and remove as many reported warnings as possible.
 * [0.5] Add relevant [labels](https://docs.docker.com/engine/reference/builder/#label), e.g. maintainer, version, etc. ([hint](https://medium.com/@chamilad/lets-make-your-docker-image-better-than-90-of-existing-ones-8b1e5de950d))
 
-###Anaconda
+### Anaconda
 
 **Устанавливаем anaconda и создаем env**
 
@@ -149,7 +149,7 @@ Here is the list of tools and their versions that are used in your work:
     conda env export > environment.yml
     conda deactivate
     
-    ####Enviroment.yml
+    #### Enviroment.yml
 
 ```
 
@@ -167,7 +167,7 @@ dependencies:
 
 prefix: /home/karina/anaconda3/envs/hometask
 ```
-###Docker
+### Docker
 
 ### Install Docker
 ```
@@ -183,8 +183,7 @@ Some useful links:
 
     touch Dockerfile
     nano Dockerfile
-
-####Dockerfile
+#### Dockerfile
 
 ```
 FROM ubuntu:latest
@@ -246,6 +245,7 @@ RUN wget https://github.com/COMBINE-lab/salmon/releases/download/v1.9.0/salmon-1
  sudo docker run --rm -it ubuntu:latest
 
 ```
+
 **Изменение Dockerfile**
 
 Я использовала Linter и удалила весь отчет в данном порядке:
@@ -257,7 +257,7 @@ RUN wget https://github.com/COMBINE-lab/salmon/releases/download/v1.9.0/salmon-1
 
 Также я добавила несколько LABEL для имени и описания.
 
-####Linter Labeled Optimazed Dockerfile
+#### Linter Labeled Optimazed Dockerfile
 ```
 FROM ubuntu:20.04
 LABEL maintainer="karina"
@@ -318,6 +318,7 @@ RUN wget https://github.com/COMBINE-lab/salmon/releases/download/v1.9.0/salmon-1
     rm -r salmon-1.9.0_linux_x86_64 
 
 ```
+
 ## Extra points [1.5]
 
 You will be awarded extra points for the following:
@@ -333,8 +334,7 @@ Docker образ:
 *   via raw Dockerfile - **2.01 Gb**
 *   via optimized Dockerfile - **1.32 Gb**
 
-
-###Dockerfile for conda
+#### Dockerfile for conda
 
 
 ```
@@ -350,4 +350,4 @@ RUN apt-get update && apt-get -y install apt-utils=2.4.8 && \
   apt-get -y installed apt-transport-https=2.0.2ubuntu0.2 && \
   conda env create --file environment.yml && conda clean -a  
 ```
-Docker — это действительно удобно и полезно.
+Да, Docker показался для меня достаточно трудным, потому что я не программист. Тем не менее, мне кажется, что Docker — это действительно удобно и полезно. Поэтому я планирую изучить его немного подробнее в дальнейшем.
