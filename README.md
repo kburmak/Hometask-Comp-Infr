@@ -226,8 +226,6 @@ done
 
 Hint: to specify the config, use the config=PATH query parameter. E.g. `http://64.129.58.13/jbrowse/?config=my_folder%2Fconfig.json` where `my_folder%2Fconfig.json` is the [escaped](https://en.wikipedia.org/wiki/Percent-encoding) path to the config file.
 
-
-
 * [0.5] Give an in-depth explanation of the OSI model and how the TCP/IP stack works. Don't copy-paste descriptions from the internet; paraphrase and shorten as much as possible (imagine writing a cheat sheet for yourself).
 
 **Open Systems Interconnections (OSI)** - логическая и концептуальная модель, определяющая сетевое взаимодействие, используемое системами, открытыми для взаимодействия и связи с другими системами.
