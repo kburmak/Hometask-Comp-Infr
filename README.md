@@ -215,7 +215,7 @@ done
 
 sudo jbrowse add-track sorted.Homo_sapiens.GRCh38.108.gff3.gz  --load copy --out /home/kburmak/JBrowse/
 
-for i in chipseq1 chipseq2 chipseq atacseq;
+for i in chipseq1 chipseq2 chipseq3 atacseq;
 do 
   sudo jbrowse add-track sort_${i}_renamed.bed.gz --load copy --out /home/kburmak/JBrowse/
 done
