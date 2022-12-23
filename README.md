@@ -112,10 +112,10 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOIQwhGB8oke5Sc/raXsjAUYAF4x62WodlcN+vaNnwd8
 
 Параметры:
 
-Параметры:
+Платформа- Intel Ice Lake
 
-Платформа - Intel Ice Lake
 vCPU - 2 Gb
+
 RAM - 4  Gb
 
 Устанавливаем необходимые пакеты:
@@ -143,16 +143,16 @@ tabix -p gff sorted.Homo_sapiens.GRCh38.108.gff3.gz;
 ```
 ### ChIP-seqи, сухареки
 
-**Загружаем BED и ATAC-seq файлы. Применяем к ним функции `sort`, `bgzip` и `index` к ним, используя `tabix`**
+**Загружаем BED и ATAC-seq файлы. Применяем к ним функции `sort`, `bgzip` и `index` к ним, используя `tabix`**.
 
 ```
-wget -nc https://www.encodeproject.org/files/ENCFF664LSW/@@download/ENCFF664LSW.bed.gz  -O chipseq1.bed.gz
+wget -nc https://www.encodeproject.org/files/ENCFF696HNR/@@download/ENCFF696HNR.bed.gz  -O chipseq1.bed.gz
 
-wget -nc https://www.encodeproject.org/files/ENCFF276WTW/@@download/ENCFF276WTW.bed.gz -O chipseq2.bed.gz
+wget -nc https://www.encodeproject.org/files/ENCFF438RKW/@@download/ENCFF438RKW.bed.gz -O chipseq2.bed.gz
 
-wget -nc https://www.encodeproject.org/files/ENCFF666WMP/@@download/ENCFF666WMP.bed.gz -O chipseq3.bed.gz
+wget -nc https://www.encodeproject.org/files/ENCFF028UPG/@@download/ENCFF028UPG.bed.gz -O chipseq3.bed.gz
 
-wget -nc https://www.encodeproject.org/files/ENCFF031OEA/@@download/ENCFF031OEA.bed.gz -O atacseq.bed.gz
+wget -nc https://www.encodeproject.org/files/ENCFF716GDC/@@download/ENCFF716GDC.bed.gz -O atacseq.bed.gz
 
 for a in atacseq chipseq1 chipseq2 chipseq3;
 do
